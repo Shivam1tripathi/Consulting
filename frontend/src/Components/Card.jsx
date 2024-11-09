@@ -5,7 +5,7 @@ const Card = (props) => {
     <div className="w-72 m-4 bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-transform transform hover:scale-105 cursor-pointer hover:shadow-xl">
       <img
         className="w-full h-48 object-cover"
-        src={`http://localhost:8080/api/v1/project/Project-photo/${props.id}`} // Replace with your image URL
+        src={`http://localhost:8080/api/v1/project/Project-photo/${props.id}`}
         alt={props.name}
       />
       <div className="p-4">

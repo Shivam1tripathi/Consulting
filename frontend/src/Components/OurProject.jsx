@@ -3,8 +3,7 @@ import Card from "./Card";
 import axios from "axios";
 
 const OurProject = () => {
-  let projects = [1, 2, 3, 4];
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   const fetchingdata = async () => {
     try {
@@ -33,6 +32,11 @@ const OurProject = () => {
         {data?.map((e) => {
           return <Card id={e._id} name={e.name} description={e.description} />;
         })}
+        {data.length === 0 && (
+          <h1 className="text-red-500 font-bold">
+            Please add Project from admin panel
+          </h1>
+        )}
       </div>
     </div>
   );

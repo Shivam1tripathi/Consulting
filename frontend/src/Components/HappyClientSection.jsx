@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import HappyClientCard from "./HappyClientCard";
 import axios from "axios";
 const HappyClientSection = () => {
-  const [data, setData] = useState();
-  let Clients = [1, 2, 3, 4];
+  const [data, setData] = useState([]);
   const fetchingdata = async () => {
     try {
       const data1 = await axios.get(
@@ -33,6 +32,11 @@ const HappyClientSection = () => {
             />
           );
         })}
+        {data.length === 0 && (
+          <h1 className="text-red-500 font-bold">
+            Please add Client from admin panel
+          </h1>
+        )}
       </div>
     </div>
   );
