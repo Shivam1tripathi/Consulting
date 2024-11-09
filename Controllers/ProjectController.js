@@ -1,7 +1,6 @@
 import slugify from "slugify";
 import ProjectModel from "../Models/ProjectModel.js";
 import fs from "fs";
-import sharp from "sharp";
 
 export const createProjectController = async (req, res) => {
   try {
@@ -17,27 +16,10 @@ export const createProjectController = async (req, res) => {
     }
 
     // Process Image (Crop and Resize using Sharp)
-    let processedPhoto = null;
+    const Project = new ProjectModel({ ...req.fields, slug: slugify(name) });
     if (photo) {
-      // Load the image into sharp
-      const imageBuffer = fs.readFileSync(photo.path);
-
-      // Perform cropping and resizing (450x350 ratio)
-      processedPhoto = await sharp(imageBuffer)
-        .resize(450, 350) // Resize to the desired dimensions (you can adjust this)
-        .toBuffer(); // Return the buffer to store in the database
-    }
-
-    // Create the Project
-    const Project = new ProjectModel({
-      ...req.fields,
-      slug: slugify(name),
-    });
-
-    // If the photo is processed, add it to the project model
-    if (processedPhoto) {
-      Project.photo.data = processedPhoto;
-      Project.photo.contentType = photo.type; // Content Type (MIME Type)
+      Project.photo.data = fs.readFileSync(photo.path);
+      Project.photo.contentType = photo.type;
     }
 
     // Save the Project to the Database
